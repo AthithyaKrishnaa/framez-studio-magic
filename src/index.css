@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 35 30% 96%;
+    --foreground: 20 20% 15%;
+
+    --card: 35 25% 98%;
+    --card-foreground: 20 20% 15%;
+
+    --popover: 35 25% 98%;
+    --popover-foreground: 20 20% 15%;
+
+    --primary: 0 72% 45%;
+    --primary-foreground: 35 30% 98%;
+
+    --secondary: 35 20% 90%;
+    --secondary-foreground: 20 20% 20%;
+
+    --muted: 35 15% 92%;
+    --muted-foreground: 20 10% 45%;
+
+    --accent: 42 80% 50%;
+    --accent-foreground: 20 20% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 35 20% 88%;
+    --input: 35 20% 88%;
+    --ring: 0 72% 45%;
+
+    --radius: 0.75rem;
+
+    --gold: 42 80% 50%;
+    --gold-light: 42 70% 70%;
+    --gold-dark: 42 85% 38%;
+    --cream: 35 35% 94%;
+    --cream-dark: 35 25% 88%;
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Lato', sans-serif;
+
+    --shadow-soft: 0 4px 20px -4px hsl(20 20% 15% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(20 20% 15% / 0.1);
+    --shadow-elevated: 0 16px 50px -12px hsl(20 20% 15% / 0.15);
+    --shadow-gold: 0 4px 20px -4px hsl(42 80% 50% / 0.3);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
+  }
+
+  .container-narrow {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)), hsl(var(--gold)), hsl(var(--gold-light)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-border-trace {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gold-border-trace::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: inherit;
+    transition: border-color 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .gold-border-trace:hover::before {
+    border-color: hsl(var(--gold));
+    animation: border-trace 0.8s ease forwards;
+  }
+
+  @keyframes border-trace {
+    0% {
+      clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+    }
+    25% {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    50% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%);
+    }
+    75% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  .whatsapp-pulse::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: hsl(142 70% 45% / 0.4);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  @keyframes ken-burns {
+    0% {
+      transform: scale(1) translate(0, 0);
+    }
+    50% {
+      transform: scale(1.08) translate(-1%, -1%);
+    }
+    100% {
+      transform: scale(1) translate(0, 0);
+    }
+  }
+
+  .ken-burns {
+    animation: ken-burns 20s ease-in-out infinite;
+  }
+}
