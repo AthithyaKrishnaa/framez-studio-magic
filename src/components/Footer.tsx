@@ -32,9 +32,9 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Connect</h4>
           <div className="space-y-2 text-sm opacity-70">
-            <a href="https://wa.me/918098754312" target="_blank" rel="noopener noreferrer" className="block hover:opacity-100 transition-opacity">WhatsApp</a>
+            <a href="https://wa.me/919342023282" target="_blank" rel="noopener noreferrer" className="block hover:opacity-100 transition-opacity">WhatsApp</a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="block hover:opacity-100 transition-opacity">Instagram</a>
-            <p>+91 80987 54312</p>
+            <p>+91 93420 23282</p>
           </div>
         </div>
       </div>

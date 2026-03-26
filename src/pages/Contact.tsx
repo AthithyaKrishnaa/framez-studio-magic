@@ -105,8 +105,8 @@ const Contact = () => {
               <div className="bg-card p-6 rounded-lg shadow-soft">
                 <h3 className="font-display text-lg font-semibold text-foreground mb-4">Contact Info</h3>
                 <div className="space-y-4">
-                  <a href="tel:+918098754312" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    <Phone size={18} className="text-primary" /> +91 80987 54312
+                  <a href="tel:+919342023282" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <Phone size={18} className="text-primary" /> +91 93420 23282
                   </a>
                   <a
                     href={whatsappUrl(WHATSAPP_MESSAGES.order)}

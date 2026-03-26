@@ -8,7 +8,7 @@
 
 <br/>
 
-[🌐 View Live Website](https://framezstudioo.netlify.app/) &nbsp;&nbsp;|&nbsp;&nbsp; [📱 Order on WhatsApp](https://wa.me/918098754312) &nbsp;&nbsp;|&nbsp;&nbsp; [📩 Contact Us](mailto:framerstudio@gmail.com)
+[🌐 View Live Website](https://framezstudioo.netlify.app/) &nbsp;&nbsp;|&nbsp;&nbsp; [📱 Order on WhatsApp](https://wa.me/919342023282) &nbsp;&nbsp;|&nbsp;&nbsp; [📩 Contact Us](mailto:framerstudio@gmail.com)
 
 </div>
 
