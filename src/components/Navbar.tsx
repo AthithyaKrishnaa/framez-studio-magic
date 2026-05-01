@@ -74,49 +74,43 @@ const Navbar = () => {
             </Link>
 
             {/* User menu */}
-            {user ? (
-              <div className="relative hidden md:block">
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-secondary transition-colors text-sm font-body font-medium text-foreground"
-                >
-                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
-                    {isAdmin ? <Shield size={14} className="text-primary" /> : <User size={14} className="text-primary" />}
-                  </div>
-                  <span className="hidden lg:block max-w-[100px] truncate">
-                    {isAdmin ? "Admin" : (user.user_metadata?.name?.split(" ")[0] || "Account")}
-                  </span>
-                </button>
-                <AnimatePresence>
-                  {userMenuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-1 w-52 bg-card border border-border rounded-xl shadow-elevated py-1 z-50"
-                    >
-                      <div className="px-4 py-2.5 border-b border-border">
-                        <p className="text-xs font-semibold text-foreground font-body truncate">{user.email}</p>
-                        {isAdmin && <p className="text-[10px] text-primary font-body font-medium mt-0.5">Admin Account</p>}
-                      </div>
-                      {isAdmin && (
-                        <Link to="/admin/dashboard" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-secondary transition-colors font-body">
-                          <Shield size={15} className="text-primary" /> Dashboard
-                        </Link>
-                      )}
-                      <button onClick={handleSignOut} className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-secondary transition-colors font-body">
-                        <LogOut size={15} className="text-muted-foreground" /> Sign Out
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <Link to="/login" className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-border text-sm font-body font-medium text-foreground hover:bg-secondary transition-colors">
-                <User size={14} /> Login
-              </Link>
-            )}
+            <div className="relative hidden md:block">
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-secondary transition-colors text-sm font-body font-medium text-foreground"
+              >
+                <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                  {isAdmin ? <Shield size={14} className="text-primary" /> : <User size={14} className="text-primary" />}
+                </div>
+                <span className="hidden lg:block max-w-[100px] truncate">
+                  {isAdmin ? "Admin" : (user?.user_metadata?.name?.split(" ")[0] || "Account")}
+                </span>
+              </button>
+              <AnimatePresence>
+                {userMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 top-full mt-1 w-52 bg-card border border-border rounded-xl shadow-elevated py-1 z-50"
+                  >
+                    <div className="px-4 py-2.5 border-b border-border">
+                      <p className="text-xs font-semibold text-foreground font-body truncate">{user?.email}</p>
+                      {isAdmin && <p className="text-[10px] text-primary font-body font-medium mt-0.5">Admin Account</p>}
+                    </div>
+                    {isAdmin && (
+                      <Link to="/admin/dashboard" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-secondary transition-colors font-body">
+                        <Shield size={15} className="text-primary" /> Dashboard
+                      </Link>
+                    )}
+                    <button onClick={handleSignOut} className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-secondary transition-colors font-body">
+                      <LogOut size={15} className="text-muted-foreground" /> Sign Out
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Mobile toggle */}
             <button
@@ -160,28 +154,15 @@ const Navbar = () => {
                 </Link>
               ))}
               <div className="pt-2 border-t border-border mt-2 space-y-1">
-                {user ? (
-                  <>
-                    <p className="text-xs text-muted-foreground font-body px-2 py-1 truncate">{user.email}</p>
-                    {isAdmin && (
-                      <Link to="/admin/dashboard" onClick={() => setIsOpen(false)} className="flex items-center gap-2 px-2 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors font-body">
-                        <Shield size={16} className="text-primary" /> Admin Dashboard
-                      </Link>
-                    )}
-                    <button onClick={() => { handleSignOut(); setIsOpen(false); }} className="w-full flex items-center gap-2 px-2 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors font-body">
-                      <LogOut size={16} className="text-muted-foreground" /> Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2 px-2 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors font-body">
-                      <User size={16} /> Sign In
-                    </Link>
-                    <Link to="/register" onClick={() => setIsOpen(false)} className="flex items-center gap-2 px-2 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors font-body">
-                      <User size={16} /> Create Account
-                    </Link>
-                  </>
+                <p className="text-xs text-muted-foreground font-body px-2 py-1 truncate">{user?.email}</p>
+                {isAdmin && (
+                  <Link to="/admin/dashboard" onClick={() => setIsOpen(false)} className="flex items-center gap-2 px-2 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors font-body">
+                    <Shield size={16} className="text-primary" /> Admin Dashboard
+                  </Link>
                 )}
+                <button onClick={() => { handleSignOut(); setIsOpen(false); }} className="w-full flex items-center gap-2 px-2 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors font-body">
+                  <LogOut size={16} className="text-muted-foreground" /> Sign Out
+                </button>
               </div>
             </div>
           </motion.div>

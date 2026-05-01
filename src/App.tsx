@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -23,13 +23,55 @@ import NotFound from "./pages/NotFound";
 
 // Auth pages
 import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === "/login" || location.pathname.startsWith("/admin");
+
+  return (
+    <>
+      <ScrollToTop />
+      {!isAuthPage && <Navbar />}
+      <main className={isAuthPage ? "" : "min-h-screen"}>
+        <Routes>
+          {/* Public Auth Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<AdminLogin />} />
+
+          {/* Protected Store Routes (forces Google login) */}
+          <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+          <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
+          <Route path="/gallery" element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
+          <Route path="/custom-order" element={<ProtectedRoute><CustomOrder /></ProtectedRoute>} />
+          <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+          <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+          <Route path="/track-order" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />
+          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+
+          {/* Admin Protected Routes */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute requireAdmin redirectTo="/admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      {!isAuthPage && <Footer />}
+      {!isAuthPage && <WhatsAppButton />}
+    </>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -38,40 +80,7 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <CartProvider>
-            <ScrollToTop />
-            <Navbar />
-            <main className="min-h-screen">
-              <Routes>
-                {/* Public */}
-                <Route path="/" element={<Index />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/custom-order" element={<CustomOrder />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/track-order" element={<TrackOrder />} />
-                <Route path="/cart" element={<Cart />} />
-
-                {/* Customer Auth */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-
-                {/* Admin */}
-                <Route path="/admin" element={<AdminLogin />} />
-                <Route
-                  path="/admin/dashboard"
-                  element={
-                    <ProtectedRoute requireAdmin redirectTo="/admin">
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-            <WhatsAppButton />
+            <AppContent />
           </CartProvider>
         </AuthProvider>
       </BrowserRouter>
