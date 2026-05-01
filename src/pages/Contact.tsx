@@ -4,6 +4,7 @@ import { MessageCircle, Send, Phone, MapPin } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY } from "@/lib/emailjs";
 import { whatsappUrl, WHATSAPP_MESSAGES } from "@/lib/whatsapp";
+import { supabase } from "@/lib/supabase";
 import SectionHeading from "@/components/SectionHeading";
 import { toast } from "sonner";
 
@@ -15,18 +16,30 @@ const Contact = () => {
     e.preventDefault();
     setSending(true);
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          name: form.name,
-          from_contact: form.email,
-          message: form.message,
-          form_type: "Contact",
-          time: new Date().toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }),
-        },
-        EMAILJS_PUBLIC_KEY
-      );
+      // Save to Supabase (admin dashboard visibility)
+      await supabase.from("contacts").insert({
+        name: form.name,
+        email: form.email || null,
+        message: form.message,
+        status: "new",
+      });
+
+      // Also send via EmailJS if configured
+      try {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            name: form.name,
+            from_contact: form.email,
+            message: form.message,
+            form_type: "Contact",
+            time: new Date().toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }),
+          },
+          EMAILJS_PUBLIC_KEY
+        );
+      } catch { /* EmailJS is optional */ }
+
       toast.success("Message sent! We'll get back to you soon.");
       setForm({ name: "", email: "", message: "" });
     } catch {
